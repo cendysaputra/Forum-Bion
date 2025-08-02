@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *input_file, *genap_file, *ganjil_file;
+    int bilangan;
+    
+    // File input untuk baca
+    input_file = fopen("soal1_angka.txt", "r");
+    if (input_file == NULL) {
+        printf("Error: File 'soal1_angka.txt' tidak ditemukan!\n");
+        return 1;
+    }
+    
+    // File output untuk tulis bilangan genap
+    genap_file = fopen("genap.txt", "w");
+    if (genap_file == NULL) {
+        printf("Error: Tidak dapat membuat file 'genap.txt'!\n");
+        fclose(input_file);
+        return 1;
+    }
+    
+    // File output untuk tulis bilangan ganjil
+    ganjil_file = fopen("ganjil.txt", "w");
+    if (ganjil_file == NULL) {
+        printf("Error: Tidak dapat membuat file 'ganjil.txt'!\n");
+        fclose(input_file);
+        fclose(genap_file);
+        return 1;
+    }
+    
+    printf("Bilangan:\n");
+    
+    // Baca bilangan dari file > pisah genap/ganjil
+    while (fscanf(input_file, "%d", &bilangan) == 1) {
+        printf("%d ", bilangan);
+        
+        // Cek bilangan genap/ganjil
+        if (bilangan % 2 == 0) {
+            // Bilangan genap
+            fprintf(genap_file, "%d\n", bilangan);
+        }
+        
+        else {
+            // Bilangan ganjil
+            fprintf(ganjil_file, "%d\n", bilangan);
+        }
+    }
+    
+    printf("\n\nPemisah selesai!\n");
+    printf("- Bilangan genap disimpan: genap.txt\n");
+    printf("- Bilangan ganjil disimpan: ganjil.txt\n");
+    
+    fclose(input_file);
+    fclose(genap_file);
+    fclose(ganjil_file);
+    
+    return 0;
+}
